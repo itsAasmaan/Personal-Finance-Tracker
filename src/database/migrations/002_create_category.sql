@@ -10,11 +10,13 @@ CREATE TABLE IF NOT EXISTS categories (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id, name)
-)
+);
 
 CREATE INDEX IF NOT EXISTS idx_categories_user_id ON categories(user_id);
 CREATE INDEX IF NOT EXISTS idx_categories_type ON categories(type);
 CREATE INDEX IF NOT EXISTS idx_categories_active ON categories(name);
+
+DROP TRIGGER IF EXISTS update_categories_updated_at ON categories;
 
 CREATE TRIGGER update_categories_updated_at 
     BEFORE UPDATE ON categories 
