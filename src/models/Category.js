@@ -138,7 +138,7 @@ class Category {
         throw new Error("Category not found or access denied");
       }
 
-      this.isActive = false;
+      this.active = false;
       return this;
     } catch (error) {
       throw error;
@@ -285,7 +285,7 @@ class Category {
       color: this.color,
       icon: this.icon,
       type: this.type,
-      isActive: this.isActive,
+      active: this.active,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     };

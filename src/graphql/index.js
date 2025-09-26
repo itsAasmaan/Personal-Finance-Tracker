@@ -1,50 +1,29 @@
 const { gql } = require('graphql-tag');
+const _ = require('lodash');
+
 const userTypeDefs = require('./schemas/user');
 const userResolvers = require('./resolvers/user');
+const categoryTypeDefs = require('./schemas/category');
+const categoryResolvers = require('./resolvers/category');
 
 // Base type definitions
 const baseTypeDefs = gql`
   type Query {
-    hello: String
-    serverStatus: ServerStatus
+    _empty: String
   }
   
   type Mutation {
     _empty: String
   }
-  
-  type ServerStatus {
-    message: String
-    timestamp: String
-    database: String
-  }
 `;
 
 // Combine all type definitions
-const typeDefs = [baseTypeDefs, userTypeDefs];
+const typeDefs = [baseTypeDefs, userTypeDefs, categoryTypeDefs];
 
 // Base resolvers
 const baseResolvers = {
   Query: {
-    hello: () => 'Hello from Personal Finance Tracker GraphQL API! 🚀',
-    
-    serverStatus: async () => {
-      const db = require('../config/database');
-      let dbStatus = 'disconnected';
-      
-      try {
-        await db.query('SELECT 1');
-        dbStatus = 'connected';
-      } catch (error) {
-        dbStatus = 'error';
-      }
-      
-      return {
-        message: 'Server is running successfully',
-        timestamp: new Date().toISOString(),
-        database: dbStatus
-      };
-    }
+    _empty: () => null
   },
   
   Mutation: {
@@ -53,16 +32,11 @@ const baseResolvers = {
 };
 
 // Combine all resolvers
-const resolvers = {
-  Query: {
-    ...baseResolvers.Query,
-    ...userResolvers.Query
-  },
-  Mutation: {
-    ...baseResolvers.Mutation,
-    ...userResolvers.Mutation
-  }
-};
+const resolvers = _.merge(
+  baseResolvers,
+  userResolvers,
+  categoryResolvers
+);
 
 module.exports = {
   typeDefs,
