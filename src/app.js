@@ -6,6 +6,7 @@ const helmet = require("helmet");
 
 const config = require("./config/environment");
 const { typeDefs, resolvers } = require("./graphql");
+const { getAuthenticatedUser } = require("./middleware/auth");
 
 async function createApp() {
   const app = express();
@@ -16,7 +17,10 @@ async function createApp() {
     })
   );
 
-  const allowedOrigins = [config.cors.origin, "https://studio.apollographql.com"];
+  const allowedOrigins = [
+    config.cors.origin,
+    "https://studio.apollographql.com",
+  ];
   app.use(
     cors({
       origin: function (origin, callback) {
@@ -44,7 +48,14 @@ async function createApp() {
   app.use(
     "/graphql",
     expressMiddleware(server, {
-      context: async ({ req }) => ({ req }),
+      context: async ({ req }) => {
+        const user = await getAuthenticatedUser(req);
+
+        return {
+          req,
+          user,
+        };
+      },
     })
   );
 

@@ -12,11 +12,6 @@ async function startServer() {
         console.log("Use Apollo Studio Sandbox for GraphQL operations:");
         console.log("https://studio.apollographql.com/sandbox/explorer");
         console.log(`GraphQL Endpoint: http://localhost:${config.port}/graphql`);
-        console.log("\n Try these queries:");
-        console.log(" query { hello }");
-        console.log(
-          "   query { serverStatus { message timestamp database } }\n"
-        );
       }
     });
   } catch (error) {

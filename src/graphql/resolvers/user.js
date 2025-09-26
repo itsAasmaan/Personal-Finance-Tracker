@@ -15,7 +15,7 @@ const userResolvers = {
   },
 
   Mutation: {
-    register: async (parent, { input }) => {
+    register: async (parent, { input }, context) => {
       try {
         const { user, token } = await AuthService.register(input);
 
@@ -28,7 +28,7 @@ const userResolvers = {
       }
     },
 
-    login: async (parent, { input }) => {
+    login: async (parent, { input }, context) => {
       try {
         const { user, token } = await AuthService.login(input);
 
