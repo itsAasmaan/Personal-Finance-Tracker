@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS accounts (
     current_balance DECIMAL(12, 2) DEFAULT 0.00,
     currency VARCHAR(3) DEFAULT 'INR',
     color VARCHAR(7) DEFAULT '#6366f1',
-    icon VARCHAR(50) DEFAULT 'credit-card'
+    icon VARCHAR(50) DEFAULT 'credit-card',
     is_active BOOLEAN DEFAULT true,
     is_default BOOLEAN DEFAULT false,
     notes TEXT,
@@ -40,7 +40,7 @@ BEGIN
     IF NEW.is_default = true THEN
         UPDATE accounts
         SET is_default = FALSE
-        WHERE user_id = NEW.user_id AND id != NEW.id
+        WHERE user_id = NEW.user_id AND id != NEW.id;
     END IF;
 
     RETURN NEW;
