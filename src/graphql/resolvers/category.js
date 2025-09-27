@@ -72,7 +72,7 @@ const categoryResolver = {
 
         const category = await Category.create(categoryData);
 
-        return category.toJSON;
+        return category.toJSON();
       } catch (error) {
         throw new Error(`Failed to create category: ${error.message}`);
       }
@@ -95,7 +95,7 @@ const categoryResolver = {
 
         category = await Category.update(categoryData);
 
-        return category.toJSON;
+        return category.toJSON();
       } catch (error) {
         throw new Error(`Failed to update category: ${error.message}`);
       }
@@ -111,7 +111,7 @@ const categoryResolver = {
           throw new Error("Category not found");
         }
 
-        return (await category.deactivateCategory()).toJSON;
+        return (await category.deactivateCategory()).toJSON();
       } catch (error) {
         throw new Error(`Failed to deactive category: ${error.message}`);
       }
