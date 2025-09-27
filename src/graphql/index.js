@@ -5,6 +5,8 @@ const userTypeDefs = require('./schemas/user');
 const userResolvers = require('./resolvers/user');
 const categoryTypeDefs = require('./schemas/category');
 const categoryResolvers = require('./resolvers/category');
+const accountTypeDefs = require('./schemas/account');
+const accountResolvers = require('./resolvers/account');
 
 // Base type definitions
 const baseTypeDefs = gql`
@@ -18,7 +20,7 @@ const baseTypeDefs = gql`
 `;
 
 // Combine all type definitions
-const typeDefs = [baseTypeDefs, userTypeDefs, categoryTypeDefs];
+const typeDefs = [baseTypeDefs, userTypeDefs, categoryTypeDefs, accountTypeDefs];
 
 // Base resolvers
 const baseResolvers = {
@@ -35,7 +37,8 @@ const baseResolvers = {
 const resolvers = _.merge(
   baseResolvers,
   userResolvers,
-  categoryResolvers
+  categoryResolvers,
+  accountResolvers
 );
 
 module.exports = {

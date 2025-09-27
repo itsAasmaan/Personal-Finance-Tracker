@@ -39,7 +39,7 @@ class Account {
                 user_id, name, account_type, bank_name, account_number_last_four, 
                 initial_balance, current_balance, color, currency, icon, is_default, notes
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $6, $7, $8, $9, $10, $11, $12)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
             RETURNING *
         `;
 
@@ -222,7 +222,7 @@ class Account {
         throw new Error("Account not found or access denied");
       }
 
-      this.isActive = false;
+      this.active = false;
       this.isDefault = false;
       return this;
     } catch (error) {
@@ -329,7 +329,7 @@ class Account {
       currency: this.currency,
       color: this.color,
       icon: this.icon,
-      isActive: this.isActive,
+      active: this.active,
       isDefault: this.isDefault,
       notes: this.notes,
       createdAt: this.createdAt,
