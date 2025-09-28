@@ -143,9 +143,7 @@ const categoryResolver = {
 
         return categories.map((category) => category.toJSON());
       } catch (error) {
-        throw new Error(
-          `Failed to create default categories: ${error.message}`
-        );
+        throw new Error(`Failed to create default categories: ${error.message}`);
       }
     },
   },

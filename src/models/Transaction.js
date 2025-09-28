@@ -81,30 +81,21 @@ class Transaction {
     }
   }
 
-  static async validateTransaction({
-    userId,
-    accountId,
-    categoryId,
-    type,
-    amount,
-    transferAccountId,
-  }) {
+  static async validateTransaction({ userId, accountId, categoryId, type, amount, transferAccountId }) {
     // Validate amount
     if (!amount || amount <= 0) {
       throw new Error("Amount must be greater than 0");
     }
 
     // Validate account belongs to user
-    const accountQuery =
-      "SELECT id FROM accounts WHERE id = $1 AND user_id = $2 AND is_active = true";
+    const accountQuery = "SELECT id FROM accounts WHERE id = $1 AND user_id = $2 AND is_active = true";
     const accountResult = await db.query(accountQuery, [accountId, userId]);
     if (accountResult.rows.length === 0) {
       throw new Error("Account not found or inactive");
     }
 
     // Validate category belongs to user and matches transaction type
-    const categoryQuery =
-      "SELECT id, type FROM categories WHERE id = $1 AND user_id = $2 AND is_active = true";
+    const categoryQuery = "SELECT id, type FROM categories WHERE id = $1 AND user_id = $2 AND is_active = true";
     const categoryResult = await db.query(categoryQuery, [categoryId, userId]);
     if (categoryResult.rows.length === 0) {
       throw new Error("Category not found or inactive");
@@ -112,23 +103,16 @@ class Transaction {
 
     const categoryType = categoryResult.rows[0].type;
     if (categoryType !== type && type !== "transfer") {
-      throw new Error(
-        `Category type '${categoryType}' does not match transaction type '${type}'`
-      );
+      throw new Error(`Category type '${categoryType}' does not match transaction type '${type}'`);
     }
 
     // Validate transfer account if it's a transfer transaction
     if (type === "transfer") {
       if (!transferAccountId) {
-        throw new Error(
-          "Transfer account is required for transfer transactions"
-        );
+        throw new Error("Transfer account is required for transfer transactions");
       }
 
-      const transferAccountResult = await db.query(accountQuery, [
-        transferAccountId,
-        userId,
-      ]);
+      const transferAccountResult = await db.query(accountQuery, [transferAccountId, userId]);
       if (transferAccountResult.rows.length === 0) {
         throw new Error("Transfer account not found or inactive");
       }
@@ -376,8 +360,7 @@ class Transaction {
   // Delete transaction
   async delete() {
     try {
-      const query =
-        "DELETE FROM transactions WHERE id = $1 AND user_id = $2 RETURNING *";
+      const query = "DELETE FROM transactions WHERE id = $1 AND user_id = $2 RETURNING *";
       const result = await db.query(query, [this.id, this.userId]);
 
       if (result.rows.length === 0) {

@@ -24,23 +24,12 @@ const config = {
   },
 };
 
-const requiredEnvironmentVariables = [
-  "DB_HOST",
-  "DB_NAME",
-  "DB_USER",
-  "DB_PASSWORD",
-  "JWT_SECRET",
-];
+const requiredEnvironmentVariables = ["DB_HOST", "DB_NAME", "DB_USER", "DB_PASSWORD", "JWT_SECRET"];
 
-const missingEnvironmentVariables = requiredEnvironmentVariables.filter(
-  (envVar) => !process.env[envVar]
-);
+const missingEnvironmentVariables = requiredEnvironmentVariables.filter((envVar) => !process.env[envVar]);
 
 if (missingEnvironmentVariables.length > 0) {
-  console.error(
-    "Missing required environment variables: ",
-    missingEnvironmentVariables
-  );
+  console.error("Missing required environment variables: ", missingEnvironmentVariables);
   process.exit(1);
 }
 

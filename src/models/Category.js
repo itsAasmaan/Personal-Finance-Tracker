@@ -22,14 +22,7 @@ class Category {
                 RETURNING *;
             `;
 
-      const values = [
-        userId,
-        name.trim(),
-        description?.trim(),
-        color,
-        icon,
-        type,
-      ];
+      const values = [userId, name.trim(), description?.trim(), color, icon, type];
 
       const result = await db.query(query, values);
 
@@ -148,8 +141,7 @@ class Category {
   async delete() {
     try {
       // TODO: later will introduce transations, so will check if category has transactions before deletion
-      const query =
-        "DELETE FROM categories WHERE id = $1 AND user_id = $2 RETURNING *";
+      const query = "DELETE FROM categories WHERE id = $1 AND user_id = $2 RETURNING *";
       const result = await db.query(query, [this.id, this.userId]);
 
       if (result.rows.length === 0) {

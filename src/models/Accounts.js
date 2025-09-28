@@ -114,8 +114,7 @@ class Account {
 
   static async findDefaultByUserId(userId) {
     try {
-      let query =
-        "SELECT * FROM accounts WHERE user_id = $1 AND is_default = true AND is_active = true";
+      let query = "SELECT * FROM accounts WHERE user_id = $1 AND is_default = true AND is_active = true";
       const values = [userId];
 
       const result = await db.query(query, values);
@@ -232,8 +231,7 @@ class Account {
 
   async delete() {
     try {
-      const query =
-        "DELETE FROM accounts WHERE id = $1 AND user_id = $2 RETURNING *";
+      const query = "DELETE FROM accounts WHERE id = $1 AND user_id = $2 RETURNING *";
       const result = await db.query(query, [this.id, this.userId]);
 
       if (result.rows.length === 0) {

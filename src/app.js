@@ -17,10 +17,7 @@ async function createApp() {
     })
   );
 
-  const allowedOrigins = [
-    config.cors.origin,
-    "https://studio.apollographql.com",
-  ];
+  const allowedOrigins = [config.cors.origin, "https://studio.apollographql.com"];
   app.use(
     cors({
       origin: function (origin, callback) {
